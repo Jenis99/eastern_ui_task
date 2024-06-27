@@ -1,12 +1,12 @@
 import 'package:eastern_ecommerce_app/module/dashboard/tabs/home_tab/controller/home_controller.dart';
 import 'package:eastern_ecommerce_app/module/dashboard/tabs/home_tab/model/home_tab_model.dart';
 import 'package:eastern_ecommerce_app/utils/constant_url.dart';
-import 'package:eastern_ecommerce_app/utils/formate_utils.dart';
+import 'package:eastern_ecommerce_app/utils/format_utils.dart';
 import 'package:flutter/material.dart';
 
-class Shopbycategoryview extends StatelessWidget {
-  const Shopbycategoryview({Key? key, required this.height, required this.width, required this.homeController, required this.whichCategory})
-      : super(key: key);
+class ShopByCategoryView extends StatelessWidget {
+  const ShopByCategoryView({super.key, required this.height, required this.width, required this.homeController, required this.whichCategory});
+
   final double height;
   final double width;
   final int whichCategory;
@@ -14,6 +14,7 @@ class Shopbycategoryview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isFirstCategory = whichCategory == 0;
     return SizedBox(
       height: height * 0.5,
       child: GridView.builder(
@@ -29,41 +30,48 @@ class Shopbycategoryview extends StatelessWidget {
             return thirdCommonBox(
               width,
               height,
-              whichCategory,
-              category: CategoryModel(),
-              shopByCategoryModel: homeController.shopByCategoryDataList[index] ?? ShopByCategoryModel(),
+              isFirstCategory,
+              subCategoryModel: isFirstCategory ? SubCategoryModel() : homeController.categoryDataList.first?.child?[index] ?? SubCategoryModel(),
+              shopByCategoryModel: isFirstCategory ? homeController.shopByCategoryDataList[index] ?? ShopByCategoryModel() : ShopByCategoryModel(),
             );
           }),
     );
   }
 
   /// Shop by category
-  Widget thirdCommonBox(double width, double height, int whichCategory, {ShopByCategoryModel? shopByCategoryModel, CategoryModel? category}) {
+  Widget thirdCommonBox(double width, double height, bool isFirstCategory,
+      {ShopByCategoryModel? shopByCategoryModel, SubCategoryModel? subCategoryModel}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Image.network(
-          whichCategory == 0
+          isFirstCategory
               ? shopByCategoryModel?.image ?? UrlConstant.placeholderImageUrl
-              : category?.categoryName ?? UrlConstant.placeholderImageUrl,
+              : /*subCategoryModel?.categoryName ??*/ UrlConstant.placeholderImageUrl,
           fit: BoxFit.cover,
           width: width * 0.40,
           height: height * 0.17,
         ),
         Container(
           alignment: Alignment.centerLeft,
-          color: whichCategory == 0 ? Utils.hexToColor(shopByCategoryModel?.tintColor ?? "0xfffff") : Colors.white,
+          color: isFirstCategory ? Utils.hexToColor(shopByCategoryModel?.tintColor ?? "0xfffff") : Colors.white,
           width: width * 0.40,
           padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 6),
           // width: 200,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(shopByCategoryModel?.name ?? category?.categoryName ?? "Explore",
-                  textAlign: TextAlign.center, style: const TextStyle(color: Colors.black, fontSize: 11)),
-              Text("Explore ${shopByCategoryModel?.sortOrder ?? category?.categoryId ?? 1}",
-                  textAlign: TextAlign.center, style: const TextStyle(color: Colors.black, fontSize: 11)),
+              Text(
+                isFirstCategory ? shopByCategoryModel?.name ?? "" : subCategoryModel?.categoryName ?? "Explore",
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.black, fontSize: 11),
+              ),
+              Text(
+                "Explore ${isFirstCategory ? shopByCategoryModel?.sortOrder ?? "" : subCategoryModel?.categoryId ?? 1}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.black, fontSize: 11),
+              ),
             ],
           ),
         ),

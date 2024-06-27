@@ -15,89 +15,59 @@ class HomeScreen extends StatelessWidget {
   final double width;
   final HomeController homeController;
 
-  // int _current = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBar(context),
       body: Obx(
-        () => homeController.isDataLoading.value ? const Center(child: CircularProgressIndicator()): SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                /// First common box of fabrics
-                FirstCommonBox(homeController: homeController, height: height, width: width),
+        () => homeController.isDataLoading.value
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      /// First common box of fabrics
+                      FirstCommonBox(homeController: homeController, height: height, width: width),
 
-                /// Suggestion
-                CarouselSliderView(height: height, width: width, homeController: homeController),
+                      /// Suggestion
+                      CarouselSliderView(height: height, width: width, homeController: homeController),
 
-                /// Shoe by category
-                commonTitle("Shop by category"),
-                Shopbycategoryview(height: height, width: width, homeController: homeController, whichCategory: 0),
+                      /// Shoe by category
+                      commonTitle("Shop by category"),
+                      ShopByCategoryView(height: height, width: width, homeController: homeController, whichCategory: 0),
 
-                /// Shop by fabrice material
-                commonTitle("Shop by fabrice material"),
-                ShopByFabricMaterialView(height: height, width: width, homeController: homeController), SizedBox(height: 10),
+                      /// Shop by fabrice material
+                      commonTitle("Shop by fabrice material"),
+                      ShopByFabricMaterialView(height: height, width: width, homeController: homeController), SizedBox(height: 10),
 
-                /// Unstiched
-                commonTitle("Unstitched"),
-                // CarouselSlider(
-                //   items: [
-                //     boutiqueBox(width: width, height: height),
-                //     boutiqueBox(width: width, height: height),
-                //     boutiqueBox(width: width, height: height),
-                //     boutiqueBox(width: width, height: height),
-                //   ],
-                //   carouselController: _controller,
-                //   options: CarouselOptions(
-                //       autoPlay: true,
-                //       enlargeCenterPage: true,
-                //       aspectRatio: 1.3,
-                //       enlargeStrategy: CenterPageEnlargeStrategy.height,
-                // ),),
-                UnStitchedCarouselView(height: height, width: width, homeController: homeController),
+                      /// Unstiched
+                      commonTitle("Unstitched"),
+                      UnStitchedCarouselView(height: height, width: width, homeController: homeController),
 
-                ///Boutique collection
-                commonTitle("Boutique collection"),
-                UnStitchedCarouselView(
-                  height: height,
-                  width: width,
-                  homeController: homeController,
-                  isBoutiqueCollection: true,
+                      ///Boutique collection
+                      commonTitle("Boutique collection"),
+                      UnStitchedCarouselView(
+                        height: height,
+                        width: width,
+                        homeController: homeController,
+                        isBoutiqueCollection: true,
+                      ),
+
+                      /// Range of pattern
+                      commonTitle("Range of pattern"),
+
+                      ShopByFabricMaterialView(height: height, width: width, homeController: homeController),
+
+                      ///Design as per occasion
+                      commonTitle("Design as per occasion"),
+                      ShopByCategoryView(height: height, width: width, homeController: homeController, whichCategory: 1),
+                    ],
+                  ),
                 ),
-
-                /// Range of pattern
-                commonTitle("Range of pattern"),
-
-                ShopByFabricMaterialView(height: height, width: width, homeController: homeController),
-                // SizedBox(
-                //   height: height * 0.3,
-                //   child: GridView.builder(
-                //       itemCount: homeController.productDataList.length,
-                //       scrollDirection: Axis.horizontal,
-                //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                //         crossAxisCount: 2,
-                //         childAspectRatio: 1,
-                //         crossAxisSpacing: 10,
-                //         mainAxisSpacing: 10,
-                //       ),
-                //       itemBuilder: (context, index) {
-                //         final ProductModel productModel = homeController.productDataList[index] ?? ProductModel();
-                //         return shopByFabricMaterial(productModel);
-                //       }),
-                // ),
-
-                ///Design as per occasion
-                commonTitle("Design as per occasion"),
-                Shopbycategoryview(height: height, width: width, homeController: homeController, whichCategory: 1),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
@@ -108,10 +78,7 @@ class HomeScreen extends StatelessWidget {
       surfaceTintColor: Colors.transparent,
       title: Row(
         children: [
-          Image.asset(
-            UrlConstant.appLogo,
-            height: height * 0.06,
-          ),
+          Image.asset(UrlConstant.appLogo, height: height * 0.06),
         ],
       ),
       actions: const [

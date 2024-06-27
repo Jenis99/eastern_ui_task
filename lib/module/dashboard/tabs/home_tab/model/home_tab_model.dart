@@ -3,7 +3,7 @@ class CategoryModel {
   String? categoryId;
   String? categoryName;
   String? parentId;
-  List<Child>? child;
+  List<SubCategoryModel>? child;
 
   CategoryModel({this.categoryId, this.categoryName, this.parentId, this.child});
 
@@ -12,9 +12,9 @@ class CategoryModel {
     categoryName = json['category_name'];
     parentId = json['parent_id'];
     if (json['child'] != null) {
-      child = <Child>[];
+      child = <SubCategoryModel>[];
       json['child'].forEach((v) {
-        child!.add(Child.fromJson(v));
+        child!.add(SubCategoryModel.fromJson(v));
       });
     }
   }
@@ -31,14 +31,14 @@ class CategoryModel {
   }
 }
 
-class Child {
+class SubCategoryModel {
   String? categoryId;
   String? categoryName;
   String? parentId;
 
-  Child({this.categoryId, this.categoryName, this.parentId});
+  SubCategoryModel({this.categoryId, this.categoryName, this.parentId});
 
-  Child.fromJson(Map<String, dynamic> json) {
+  SubCategoryModel.fromJson(Map<String, dynamic> json) {
     categoryId = json['category_id'];
     categoryName = json['category_name'];
     parentId = json['parent_id'];

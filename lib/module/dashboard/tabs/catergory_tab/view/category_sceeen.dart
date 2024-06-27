@@ -1,7 +1,7 @@
 import 'package:eastern_ecommerce_app/module/dashboard/tabs/home_tab/controller/home_controller.dart';
 import 'package:eastern_ecommerce_app/module/dashboard/tabs/home_tab/model/home_tab_model.dart';
 import 'package:eastern_ecommerce_app/utils/constant_url.dart';
-import 'package:eastern_ecommerce_app/utils/formate_utils.dart';
+import 'package:eastern_ecommerce_app/utils/format_utils.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class CategoryScreen extends StatelessWidget {
         actions: const [
           Icon(Icons.search),
           Padding(
-            padding:EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Icon(Icons.shopping_bag_outlined),
           ),
         ],

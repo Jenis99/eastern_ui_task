@@ -1,7 +1,9 @@
 import 'package:eastern_ecommerce_app/module/dashboard/tabs/catergory_tab/view/category_sceeen.dart';
+import 'package:eastern_ecommerce_app/module/dashboard/tabs/curate_tab/curate_tab_screen.dart';
 import 'package:eastern_ecommerce_app/module/dashboard/tabs/home_tab/controller/home_controller.dart';
 import 'package:eastern_ecommerce_app/module/dashboard/tabs/home_tab/view/home_screen.dart';
-import 'package:eastern_ecommerce_app/utils/constant_url.dart';
+import 'package:eastern_ecommerce_app/module/dashboard/tabs/more_tab/more_tab_screen.dart';
+import 'package:eastern_ecommerce_app/module/dashboard/tabs/sale_tab/sale_tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,17 +18,17 @@ class DashboardScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
         bottomNavigationBar: bottomNavigationBar(),
-        body: Obx(
-          () => homeController.currentTab.value == 0 // Home screen tab
-              ? HomeScreen(height: height, width: width, homeController: homeController)
-              : homeController.currentTab.value == 1 // Category screen tab
-                  ? CategoryScreen(height: height, width: width, homeController: homeController) //category tab
-                  : homeController.currentTab.value == 2 // Curate screen tab
-                      ? const Center(child: Text("Curate tab"))
-                      : homeController.currentTab.value == 3 // Sale screen tab
-                          ? const Center(child: Text("Sale tab"))
-                          : const Center(child: Text("More tab")), // More screen tab
-        ) // more tab
+        body: Obx(() => homeController.currentTab.value == 0 // Home screen tab
+            ? HomeScreen(height: height, width: width, homeController: homeController)
+            : homeController.currentTab.value == 1 // Category screen tab
+                ? CategoryScreen(height: height, width: width, homeController: homeController) //category tab
+                : homeController.currentTab.value == 2 // Curate screen tab
+                    ? const CurateTabScreen()
+                    : homeController.currentTab.value == 3 // Sale screen tab
+                        ? const SaleTabScreen()
+                        : homeController.currentTab.value == 4 // More screen tab
+                            ? const MoreTabScreen()
+                            : HomeScreen(height: height, width: width, homeController: homeController)) // default tab
         );
   }
 
@@ -65,21 +67,5 @@ class DashboardScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  curretTabView() {
-    switch (homeController.currentTab.value) {
-      case 0:
-        // do something
-        break;
-      case 1:
-        // do something else
-        break;
-      case 2:
-        return const TextStyle();
-        break;
-      case 3:
-        break;
-    }
   }
 }
